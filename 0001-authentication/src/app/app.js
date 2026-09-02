@@ -1,5 +1,5 @@
 import express from "express"
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const app = express();
 
@@ -7,21 +7,22 @@ app.use(express.json())
 
 app.get("/api", (req, res) => {
     res.status(200).json({
-        message: "Welcome to the authention api",
+        message: "Welcome to authentication api",
     })
 })
 
 app.post("/api/auth/register", (req, res) => {
     const { email, name, password } = req.body;
 
-    /* save data to db */
-
-    const token = jwt.sign({ email, name }, "e0597c431ecdc7ab4a9b2377c2ea2eb4ff84ee7072119c811bf70bd8c02f239d")
+    const token = jwt.sign({ email, name }, "ff2b7e5263ceeb79ea0d3092c3beb0ba")
 
     res.status(201).json({
         success: true,
+        message:"user created successfully",
         data: {
-            user: { email, name },
+            user: {
+                email, name
+            },
             token,
         }
     })
