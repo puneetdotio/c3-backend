@@ -1,22 +1,20 @@
-import userModel from "../models/user.model.js"
+import config from "../config/config.js";
+import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
-
-dotenv.config();
 
 export const authenticate = async (req, res, next) => {
     const token = req.headers.authorization;
 
     if (!token) {
-        return res.status(401).json({
+        return res.status(400).json({
             success: false,
-            message: "Token not found",
+            message: "token not found",
         })
     }
 
-    const data = jwt.verify(token, process.env.JWT_SECRET)
+    const data = jwt.verify(token, config.JWT_SECRET)
 
-    const user = await userModel.findById(data.id);
+    const user = await userModel.findById(data.id)
 
     req.user = user;
 
