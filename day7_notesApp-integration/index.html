@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImageKit Documentation — Sheryians Coding School</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,wght@0,300;0,600;0,700;0,900;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #0E0F14;
+  --paper:     #F5F2EB;
+  --paper2:    #EDE9DF;
+  --paper3:    #E4DFD3;
+  --rule:      #D4CEBC;
+  --muted:     #6B6455;
+  --accent:    #C84B1F;
+  --accent2:   #1A6B4A;
+  --accent3:   #1B4587;
+  --gold:      #B8860B;
+  --code-bg:   #1A1C24;
+  --code-text: #E2DCCC;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14.5px;line-height:1.7;}
+body::before{content:'SHERYIANS CODING SCHOOL';position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-family:'IBM Plex Mono',monospace;font-size:42px;font-weight:600;color:rgba(200,75,31,0.045);white-space:nowrap;pointer-events:none;z-index:0;letter-spacing:0.12em;}
+.layout{display:flex;min-height:100vh;}
+nav{width:260px;flex-shrink:0;background:var(--ink);position:sticky;top:0;height:100vh;overflow-y:auto;padding:32px 0 40px;z-index:10;}
+.nav-brand{padding:0 24px 20px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:20px;}
+.nav-brand .logo{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:white;}
+.nav-brand .logo span{color:var(--accent);}
+.nav-brand .sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.06em;margin-top:4px;margin-bottom:16px;}
+.lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:3px;gap:2px;width:fit-content;}
+.lang-btn{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:0.04em;color:rgba(255,255,255,0.45);background:none;border:none;border-radius:16px;padding:5px 12px;cursor:pointer;transition:all .18s;}
+.lang-btn.active{background:var(--accent);color:white;}
+.lang-btn:hover:not(.active){color:white;}
+.nav-group-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:0.12em;text-transform:uppercase;padding:0 24px;margin:16px 0 6px;}
+nav a{display:flex;align-items:center;gap:10px;padding:9px 24px;font-family:'DM Sans',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.5);text-decoration:none;border-left:2px solid transparent;transition:all .15s;}
+nav a:hover{color:white;background:rgba(255,255,255,0.04);}
+nav a.active{color:white;border-left-color:var(--accent);background:rgba(200,75,31,0.08);}
+.nav-num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:rgba(255,255,255,0.08);font-family:'IBM Plex Mono',monospace;font-size:9px;border-radius:4px;flex-shrink:0;transition:all .15s;}
+nav a:hover .nav-num,nav a.active .nav-num{background:var(--accent);color:white;}
+main{flex:1;max-width:calc(99% - 260px);padding:56px 56px 80px;position:relative;z-index:1;}
+.hero{margin-bottom:64px;padding-bottom:40px;border-bottom:1px solid var(--rule);}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,58px);font-weight:900;color:var(--ink);line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px;}
+.hero h1 em{font-style:italic;color:var(--accent);}
+.hero-desc{font-family:'DM Sans',sans-serif;font-size:16px;color:var(--muted);max-width:560px;line-height:1.65;margin-bottom:20px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.hero-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);border:1px solid var(--rule);border-radius:20px;padding:3px 12px;}
+.section{margin-bottom:72px;animation:fadeUp .4s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.section-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px;}
+.section-num-big{font-family:'Fraunces',serif;font-size:48px;font-weight:900;color:var(--rule);line-height:1;user-select:none;flex-shrink:0;}
+.section-title{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1.2;}
+.section-subtitle{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--muted);margin-top:4px;}
+h3{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--ink);margin:28px 0 12px;}
+p{color:#2A2720;margin-bottom:12px;line-height:1.7;}
+strong{font-weight:500;color:var(--ink);}
+ul.plain{margin:12px 0 12px 20px;}
+ul.plain li{margin-bottom:6px;color:#2A2720;font-size:14px;}
+.concept{background:var(--paper2);border-left:3px solid var(--accent3);border-radius:0 8px 8px 0;padding:14px 16px;margin:16px 0;}
+.concept-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;}
+.concept p{font-size:14px;line-height:1.65;margin-bottom:0;}
+.note{display:flex;gap:12px;background:#FEF9EC;border:1px solid #EDD97A;border-radius:8px;padding:12px 14px;margin:16px 0;}
+.note p{font-size:13px;color:#5C4A00;margin-bottom:0;}
+.note p strong{color:#3D3000;}
+.note-icon{flex-shrink:0;font-size:15px;}
+.warn{display:flex;gap:12px;background:#FEF2F2;border:1px solid #FCA5A5;border-radius:8px;padding:12px 14px;margin:16px 0;}
+.warn p{font-size:13px;color:#7F1D1D;margin-bottom:0;}
+.step-label{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:white;background:var(--accent);text-transform:uppercase;letter-spacing:0.06em;padding:3px 10px;border-radius:4px;margin:16px 0 8px;}
+.step-label.green{background:var(--accent2);}
+.step-label.blue{background:var(--accent3);}
+.step-label.gold{background:var(--gold);}
+.code-wrap{margin:16px 0;border-radius:8px;overflow:hidden;}
+.code-header{display:flex;align-items:center;justify-content:space-between;background:#13141B;padding:8px 14px;}
+.code-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;}
+.copy-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);background:none;border:1px solid rgba(255,255,255,0.12);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .15s;}
+.copy-btn:hover{color:white;border-color:rgba(255,255,255,0.3);}
+.code-wrap pre{background:var(--code-bg);color:var(--code-text);font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.8;padding:16px 18px;overflow-x:auto;margin:0;}
+.c-key{color:#C678DD;}
+.c-yml{color:#E5C07B;}
+.c-str{color:#98C379;}
+.c-comment{color:rgba(255,255,255,0.28);font-style:italic;}
+code{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);background:var(--paper3);border:1px solid var(--rule);border-radius:4px;padding:1px 5px;}
+.flag-table{width:100%;border-collapse:collapse;margin:16px 0;}
+.flag-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;background:var(--paper3);padding:8px 12px;text-align:left;font-weight:400;}
+.flag-table td{padding:9px 12px;border-bottom:1px solid var(--rule);font-size:13px;}
+.flag-table tr:hover td{background:var(--paper2);}
+.f-name{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#5BA4CF;}
+.f-desc{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);}
+.compare{width:100%;border-collapse:collapse;margin:16px 0;}
+.compare th{background:var(--ink);color:white;font-size:13px;font-weight:600;padding:10px 14px;text-align:left;}
+.compare th:first-child{border-radius:8px 0 0 0;}
+.compare th:last-child{border-radius:0 8px 0 0;}
+.compare td{padding:10px 14px;border-bottom:1px solid var(--rule);font-size:13px;}
+.compare tr:hover td{background:var(--paper2);}
+.row-label{font-weight:600;color:var(--ink);font-size:13px;}
+.steplist{counter-reset:step;margin:16px 0;}
+.stepitem{display:flex;gap:14px;margin-bottom:16px;}
+.stepitem .num{counter-increment:step;flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;}
+.stepitem .body strong{display:block;color:var(--ink);margin-bottom:2px;}
+.stepitem .body p{margin-bottom:0;font-size:13.5px;}
+hr.divider{border:none;border-top:1px solid var(--rule);margin:40px 0;}
+footer{display:flex;justify-content:space-between;align-items:center;border-top:2px solid var(--rule);padding:20px 56px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+@media(max-width:768px){nav{display:none;}main{padding:32px 24px 60px;max-width:100%;}footer{padding:16px 24px;flex-direction:column;gap:6px;text-align:center;}}
+body:not(.lang-hi) .lang-hi{display:none;}
+body.lang-hi .lang-en{display:none;}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav>
+  <div class="nav-brand">
+    <div class="logo">Image<span>/</span>Kit</div>
+    <div class="sub">Sheryians Coding School</div>
+    <div class="lang-toggle" id="langToggle">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="hi">हिं</button>
+    </div>
+  </div>
+  <div class="nav-group-label">Foundations</div>
+  <a href="#what-is-imagekit" class="active"><span class="nav-num">1</span>What is ImageKit?</a>
+  <a href="#why-imagekit"><span class="nav-num">2</span>Why use it?</a>
+  <div class="nav-group-label">Account Setup</div>
+  <a href="#credentials"><span class="nav-num">3</span>Getting Credentials</a>
+  <a href="#cors"><span class="nav-num">4</span>CORS Basics</a>
+  <div class="nav-group-label">Backend Setup</div>
+  <a href="#packages"><span class="nav-num">5</span>Installing Packages</a>
+  <a href="#env"><span class="nav-num">6</span>Environment Variables</a>
+  <a href="#code"><span class="nav-num">7</span>Code Structure</a>
+  <a href="#postman"><span class="nav-num">8</span>Testing with Postman</a>
+  <div class="nav-group-label">Wrap Up</div>
+  <a href="#tldr"><span class="nav-num">9</span>TL;DR</a>
+  <a href="#task"><span class="nav-num">10</span>Your Task</a>
+</nav>
+
+<main>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Backend Module &middot; File Uploads</div>
+    <h1 class="lang-en">Getting started with <em>ImageKit</em></h1>
+    <h1 class="lang-hi">ImageKit ko <em>samjho</em> aur use karo</h1>
+    <p class="hero-desc lang-en">A beginner friendly guide for storing and serving images from your Node backend, built on top of what you already know about MongoDB and Multer.</p>
+    <p class="hero-desc lang-hi">Ye ek beginner friendly guide hai jisme sikhoge ki apne Node backend se images kaise store aur serve karte hain, wo bhi usi cheez ke upar jo tumhe pehle se pata hai, yaani MongoDB aur Multer.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Node.js</span>
+      <span class="hero-tag">Express</span>
+      <span class="hero-tag">Multer</span>
+      <span class="hero-tag">ImageKit SDK</span>
+      <span class="hero-tag">Postman</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <section class="section" id="what-is-imagekit">
+    <div class="section-header">
+      <div class="section-num-big">01</div>
+      <div class="section-title-block">
+        <div class="section-title">What is ImageKit?</div>
+        <div class="section-subtitle lang-en">A media storage and delivery service</div>
+        <div class="section-subtitle lang-hi">Ek media storage aur delivery service</div>
+      </div>
+    </div>
+
+    <p class="lang-en">ImageKit is a cloud service that stores your images and videos for you and gives back a public URL for every file you upload. Instead of saving files on your own server, you send the file to ImageKit and it hands you a link that works from anywhere.</p>
+    <p class="lang-hi">ImageKit ek cloud service hai jo tumhare images aur videos ko store karti hai aur har file ke liye ek public URL wapas deti hai. Apne server pe file save karne ke bajaye, tum file ImageKit ko bhej dete ho aur wo tumhe ek link de deti hai jo kahin se bhi chalta hai.</p>
+
+    <div class="concept">
+      <div class="concept-label">Think of it like</div>
+      <p class="lang-en">A locker room for your images. You drop the file inside, and you get a receipt (the URL) that opens that exact file for anyone, anytime.</p>
+      <p class="lang-hi">Apni images ke liye ek locker room jaisa. File andar daal do, badle me ek receipt milti hai (URL) jo us exact file ko kabhi bhi, kahin se bhi khol deta hai.</p>
+    </div>
+
+    <p class="lang-en">You may have already stored files locally in the <code>uploads</code> folder using Multer. ImageKit replaces that local folder with a proper cloud storage and delivery network.</p>
+    <p class="lang-hi">Tumne pehle Multer use karke files apne <code>uploads</code> folder me local store ki hongi. ImageKit us local folder ki jagah ek proper cloud storage aur delivery network deta hai.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 2 -->
+  <section class="section" id="why-imagekit">
+    <div class="section-header">
+      <div class="section-num-big">02</div>
+      <div class="section-title-block">
+        <div class="section-title">Why use ImageKit?</div>
+        <div class="section-subtitle lang-en">Instead of saving files on your own server</div>
+        <div class="section-subtitle lang-hi">Apne server pe file save karne ke bajaye</div>
+      </div>
+    </div>
+
+    <table class="compare lang-en">
+      <thead><tr><th>Saving locally (Multer only)</th><th>Using ImageKit</th></tr></thead>
+      <tbody>
+        <tr><td class="row-label">File sits in your server folder</td><td>File sits on ImageKit cloud storage</td></tr>
+        <tr><td class="row-label">Server disk fills up over time</td><td>Your server disk stays clean</td></tr>
+        <tr><td class="row-label">No CDN, slower for far away users</td><td>Comes with a fast CDN for delivery</td></tr>
+        <tr><td class="row-label">Deploying the server can wipe old files</td><td>Files stay safe even if you redeploy</td></tr>
+        <tr><td class="row-label">No easy resizing of images</td><td>Can resize and transform images through the URL itself</td></tr>
+      </tbody>
+    </table>
+
+    <table class="compare lang-hi">
+      <thead><tr><th>Sirf Multer se local save</th><th>ImageKit use karke</th></tr></thead>
+      <tbody>
+        <tr><td class="row-label">File tumhare server folder me rehti hai</td><td>File ImageKit ke cloud storage me rehti hai</td></tr>
+        <tr><td class="row-label">Time ke saath server ka disk bhar jata hai</td><td>Tumhara server disk saaf rehta hai</td></tr>
+        <tr><td class="row-label">CDN nahi hota, door baithe users ke liye slow</td><td>Ek fast CDN ke saath aata hai delivery ke liye</td></tr>
+        <tr><td class="row-label">Server dobara deploy karne pe purani files gayab ho sakti hain</td><td>Files safe rehti hain chahe tum server redeploy hi kyu na karo</td></tr>
+        <tr><td class="row-label">Image ko resize karna easy nahi hota</td><td>URL me hi image resize aur transform kar sakte ho</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <span class="note-icon">&#128161;</span>
+      <p class="lang-en"><strong>MongoDB reminder:</strong> we never store the actual image file inside MongoDB. We only store the URL that ImageKit gives us, as a normal string field in our document.</p>
+      <p class="lang-hi"><strong>MongoDB yaad dilaate hain:</strong> hum actual image file kabhi MongoDB me store nahi karte. Hum sirf wo URL store karte hain jo ImageKit deta hai, ek normal string field ki tarah apne document me.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 3 -->
+  <section class="section" id="credentials">
+    <div class="section-header">
+      <div class="section-num-big">03</div>
+      <div class="section-title-block">
+        <div class="section-title">Getting your Credentials</div>
+        <div class="section-subtitle lang-en">Three keys you will need before writing any code</div>
+        <div class="section-subtitle lang-hi">Code likhne se pehle teen keys chahiye</div>
+      </div>
+    </div>
+
+    <p class="lang-en">To talk to ImageKit from your backend, you need three values, a public key, a private key and a URL endpoint. Here is how to get them.</p>
+    <p class="lang-hi">Apne backend se ImageKit tak baat karne ke liye tumhe teen values chahiye, ek public key, ek private key aur ek URL endpoint. In ko nikalne ka tarika neeche hai.</p>
+
+    <div class="steplist">
+      <div class="stepitem">
+        <div class="num">1</div>
+        <div class="body lang-en"><strong>Create an account</strong><p>Go to imagekit.io and sign up for a free account using your email.</p></div>
+        <div class="body lang-hi"><strong>Account banao</strong><p>imagekit.io pe jao aur apni email se ek free account bana lo.</p></div>
+      </div>
+      <div class="stepitem">
+        <div class="num">2</div>
+        <div class="body lang-en"><strong>Open the dashboard</strong><p>After signing in, you will land on the ImageKit dashboard for your media library.</p></div>
+        <div class="body lang-hi"><strong>Dashboard kholo</strong><p>Sign in karne ke baad, tum ImageKit ke dashboard pe pahunch jaoge, jaha tumhari media library hai.</p></div>
+      </div>
+      <div class="stepitem">
+        <div class="num">3</div>
+        <div class="body lang-en"><strong>Go to Developer Options</strong><p>On the left side menu, find and click on Developer Options, this page holds your API keys.</p></div>
+        <div class="body lang-hi"><strong>Developer Options me jao</strong><p>Left side menu me Developer Options dhoondo aur click karo, is page pe hi tumhari API keys milengi.</p></div>
+      </div>
+      <div class="stepitem">
+        <div class="num">4</div>
+        <div class="body lang-en"><strong>Copy the three values</strong><p>You will see a Public Key, a Private Key and a URL Endpoint. Copy all three somewhere safe.</p></div>
+        <div class="body lang-hi"><strong>Teeno values copy karo</strong><p>Tumhe ek Public Key, ek Private Key aur ek URL Endpoint dikhega. Teeno ko kahi safe jagah copy kar lo.</p></div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <span class="note-icon">&#9888;</span>
+      <p class="lang-en"><strong>Never share your Private Key</strong> in your frontend code, GitHub repo or any public place. Anyone with this key can upload or delete files in your account. It always stays on the backend, inside your <code>env</code> file.</p>
+      <p class="lang-hi"><strong>Apni Private Key kabhi share mat karo</strong> frontend code, GitHub repo ya kisi bhi public jagah pe. Ye key jiske paas hogi wo tumhare account me file upload ya delete kar sakta hai. Ye hamesha backend pe hi rehti hai, tumhari <code>env</code> file ke andar.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 4 -->
+  <section class="section" id="cors">
+    <div class="section-header">
+      <div class="section-num-big">04</div>
+      <div class="section-title-block">
+        <div class="section-title">CORS Basics</div>
+        <div class="section-subtitle lang-en">Letting your frontend talk to your backend</div>
+        <div class="section-subtitle lang-hi">Frontend ko backend se baat karne dena</div>
+      </div>
+    </div>
+
+    <p class="lang-en">CORS stands for Cross Origin Resource Sharing. By default, a browser blocks a request if your frontend and backend are running on different ports or domains. CORS is a setting on the backend that tells the browser which frontend origins are allowed to make requests.</p>
+    <p class="lang-hi">CORS ka matlab hai Cross Origin Resource Sharing. Default me, browser ek request ko block kar deta hai agar tumhara frontend aur backend alag alag ports ya domains pe chal rahe hain. CORS ek setting hai backend pe, jo browser ko batati hai ki konse frontend origins se requests allow hain.</p>
+
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">app.js</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="c-key">const</span> cors = <span class="c-key">require</span>(<span class="c-str">'cors'</span>)
+
+app.use(cors({
+  origin: <span class="c-str">'http://localhost:5173'</span>,
+  credentials: <span class="c-key">true</span>
+}))</pre>
+    </div>
+
+    <p class="lang-en">This tells the backend to accept requests only from that frontend URL. When you build your frontend later, just make sure the origin matches the port your frontend runs on.</p>
+    <p class="lang-hi">Isse backend ko pata chal jata hai ki sirf usi frontend URL se aayi requests accept karni hain. Baad me jab tum frontend banaoge, bas dhyan rakhna ki origin wahi port ho jispe tumhara frontend chal raha hai.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 5 -->
+  <section class="section" id="packages">
+    <div class="section-header">
+      <div class="section-num-big">05</div>
+      <div class="section-title-block">
+        <div class="section-title">Installing Packages</div>
+        <div class="section-subtitle lang-en">What we need on top of the usual setup</div>
+        <div class="section-subtitle lang-hi">Usual setup ke upar hume kya chahiye</div>
+      </div>
+    </div>
+
+    <p class="lang-en">Same as before, express, cors and multer, plus one new package, the official imagekit SDK.</p>
+    <p class="lang-hi">Pehle jaisa hi, express, cors aur multer, saath me ek naya package, official imagekit SDK.</p>
+
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">terminal</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>npm init <span class="c-comment">// only if starting fresh</span>
+npm install express cors multer imagekit dotenv</pre>
+    </div>
+
+    <div class="flag-table">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead><tr><th style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;background:var(--paper3);padding:8px 12px;text-align:left;font-weight:400;">Package</th><th style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;background:var(--paper3);padding:8px 12px;text-align:left;font-weight:400;">What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="f-name">express</td><td class="f-desc">Runs our backend server and handles routes</td></tr>
+          <tr><td class="f-name">cors</td><td class="f-desc">Allows the frontend to call this backend</td></tr>
+          <tr><td class="f-name">multer</td><td class="f-desc">Reads the incoming file from the request</td></tr>
+          <tr><td class="f-name">imagekit</td><td class="f-desc">Uploads that file to ImageKit and returns a URL</td></tr>
+          <tr><td class="f-name">dotenv</td><td class="f-desc">Loads our secret keys from the env file</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 6 -->
+  <section class="section" id="env">
+    <div class="section-header">
+      <div class="section-num-big">06</div>
+      <div class="section-title-block">
+        <div class="section-title">Environment Variables</div>
+        <div class="section-subtitle lang-en">Keeping your keys out of the code</div>
+        <div class="section-subtitle lang-hi">Apni keys ko code se door rakhna</div>
+      </div>
+    </div>
+
+    <p class="lang-en">Create a file named <code>env</code> at the root of your server folder and paste the three values you copied in section three.</p>
+    <p class="lang-hi">Apne server folder ke root me ek file banao jiska naam <code>env</code> ho aur usme section teen wali teeno values paste kar do.</p>
+
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">env</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="c-yml">IMAGEKIT_PUBLIC_KEY</span>=<span class="c-str">your public key here</span>
+<span class="c-yml">IMAGEKIT_PRIVATE_KEY</span>=<span class="c-str">your private key here</span>
+<span class="c-yml">IMAGEKIT_URL_ENDPOINT</span>=<span class="c-str">your url endpoint here</span>
+<span class="c-yml">PORT</span>=<span class="c-str">3000</span></pre>
+    </div>
+
+    <div class="note">
+      <span class="note-icon">&#128161;</span>
+      <p class="lang-en">Also add this file to your <code>gitignore</code> so it never gets pushed to GitHub by mistake.</p>
+      <p class="lang-hi">Is file ko apne <code>gitignore</code> me bhi add kar do, taaki galti se ye kabhi GitHub pe push na ho.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 7 -->
+  <section class="section" id="code">
+    <div class="section-header">
+      <div class="section-num-big">07</div>
+      <div class="section-title-block">
+        <div class="section-title">Code Structure</div>
+        <div class="section-subtitle lang-en">Same pattern as last class, one new config file</div>
+        <div class="section-subtitle lang-hi">Last class wala hi pattern, ek naya config file</div>
+      </div>
+    </div>
+
+    <p class="lang-en">This follows the exact folder structure we used last class, a config folder, a controllers folder and a routes folder inside <code>src</code>. The only new addition is <code>imagekit.config.js</code>.</p>
+    <p class="lang-hi">Ye bilkul wahi folder structure follow karta hai jo hamne last class use kiya tha, ek config folder, ek controllers folder aur ek routes folder <code>src</code> ke andar. Bas ek naya addition hai, <code>imagekit.config.js</code>.</p>
+
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">folder structure</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>server
+  src
+    config
+      multer.config.js
+      imagekit.config.js
+    controllers
+      user.controller.js
+    routes
+      user.routes.js
+    app.js
+  server.js
+  env</pre>
+    </div>
+
+    <div class="step-label">Step 1</div>
+    <h3>multer.config.js</h3>
+    <p class="lang-en">Same as before, memory storage, so the file stays in RAM as a buffer instead of being saved to disk. That buffer is what we send to ImageKit.</p>
+    <p class="lang-hi">Pehle jaisa hi, memory storage, isse file disk pe save hone ke bajaye RAM me ek buffer ki tarah rehti hai. Wahi buffer hum ImageKit ko bhejte hain.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">config/multer.config.js</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="c-key">const</span> multer = <span class="c-key">require</span>(<span class="c-str">'multer'</span>)
+
+<span class="c-key">const</span> storage = multer.memoryStorage()
+
+<span class="c-key">const</span> upload = multer({ storage })
+
+module.exports = upload</pre>
+    </div>
+
+    <div class="step-label green">Step 2</div>
+    <h3>imagekit.config.js</h3>
+    <p class="lang-en">This creates one ImageKit instance using the three keys from our env file. We will reuse this instance everywhere we need to upload a file.</p>
+    <p class="lang-hi">Ye hamare env file wali teeno keys use karke ek ImageKit instance banata hai. Isi instance ko hum har jagah reuse karenge jaha file upload karni ho.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">config/imagekit.config.js</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="c-key">const</span> ImageKit = <span class="c-key">require</span>(<span class="c-str">'imagekit'</span>)
+
+<span class="c-key">const</span> imagekit = <span class="c-key">new</span> ImageKit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
+})
+
+module.exports = imagekit</pre>
+    </div>
+
+    <div class="step-label blue">Step 3</div>
+    <h3>user.controller.js</h3>
+    <p class="lang-en">Instead of just logging the file like last time, we now upload the buffer to ImageKit and send back the URL it returns.</p>
+    <p class="lang-hi">Last time jaisa sirf file ko console log karne ke bajaye, ab hum buffer ko ImageKit pe upload karte hain aur jo URL wapas milta hai wahi response me bhej dete hain.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">controllers/user.controller.js</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="c-key">const</span> imagekit = <span class="c-key">require</span>(<span class="c-str">'../config/imagekit.config'</span>)
+
+<span class="c-key">const</span> create = <span class="c-key">async</span> (req, res) => {
+
+  <span class="c-key">const</span> file = req.file
+
+  <span class="c-key">const</span> uploadedFile = <span class="c-key">await</span> imagekit.upload({
+    file: file.buffer,
+    fileName: file.originalname,
+    folder: <span class="c-str">'uploads'</span>
+  })
+
+  res.status(201).json({
+    message: <span class="c-str">'file uploaded successfully'</span>,
+    imageUrl: uploadedFile.url
+  })
+}
+
+module.exports = { create }</pre>
+    </div>
+
+    <div class="note">
+      <span class="note-icon">&#128161;</span>
+      <p class="lang-en">Notice we use <code>req.file</code> here, singular, because this route accepts one image at a time, unlike last class where we used <code>req.files</code> for multiple.</p>
+      <p class="lang-hi">Yaha <code>req.file</code> use kiya hai, singular, kyunki ye route ek time pe ek hi image accept karta hai, last class ke <code>req.files</code> se alag jaha multiple images thi.</p>
+    </div>
+
+    <div class="step-label gold">Step 4</div>
+    <h3>user.routes.js</h3>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">routes/user.routes.js</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="c-key">const</span> express = <span class="c-key">require</span>(<span class="c-str">'express'</span>)
+<span class="c-key">const</span> { create } = <span class="c-key">require</span>(<span class="c-str">'../controllers/user.controller'</span>)
+<span class="c-key">const</span> upload = <span class="c-key">require</span>(<span class="c-str">'../config/multer.config'</span>)
+
+<span class="c-key">const</span> router = express.Router()
+
+router.post(<span class="c-str">'/create'</span>, upload.single(<span class="c-str">'image'</span>), create)
+
+module.exports = router</pre>
+    </div>
+
+    <h3>app.js</h3>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">app.js</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="c-key">const</span> express = <span class="c-key">require</span>(<span class="c-str">'express'</span>)
+<span class="c-key">const</span> cors = <span class="c-key">require</span>(<span class="c-str">'cors'</span>)
+<span class="c-key">require</span>(<span class="c-str">'dotenv'</span>).config()
+<span class="c-key">const</span> userRoutes = <span class="c-key">require</span>(<span class="c-str">'./routes/user.routes'</span>)
+
+<span class="c-key">const</span> app = express()
+
+app.use(cors({
+  origin: <span class="c-str">'http://localhost:5173'</span>,
+  credentials: <span class="c-key">true</span>
+}))
+
+app.use(express.json())
+
+app.use(<span class="c-str">'/user'</span>, userRoutes)
+
+module.exports = app</pre>
+    </div>
+
+    <h3>server.js</h3>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">server.js</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="c-key">const</span> app = <span class="c-key">require</span>(<span class="c-str">'./src/app'</span>)
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log(<span class="c-str">'server is running'</span>)
+})</pre>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 8 -->
+  <section class="section" id="postman">
+    <div class="section-header">
+      <div class="section-num-big">08</div>
+      <div class="section-title-block">
+        <div class="section-title">Testing with Postman</div>
+        <div class="section-subtitle lang-en">Checking the response before touching any frontend</div>
+        <div class="section-subtitle lang-hi">Kisi bhi frontend ko chhune se pehle response check karna</div>
+      </div>
+    </div>
+
+    <div class="steplist">
+      <div class="stepitem">
+        <div class="num">1</div>
+        <div class="body lang-en"><strong>Open a new request</strong><p>Set the method to POST and the URL to <code>http://localhost:3000/user/create</code></p></div>
+        <div class="body lang-hi"><strong>Nayi request kholo</strong><p>Method POST rakho aur URL <code>http://localhost:3000/user/create</code></p></div>
+      </div>
+      <div class="stepitem">
+        <div class="num">2</div>
+        <div class="body lang-en"><strong>Go to the Body tab</strong><p>Select form data, this lets you attach a real file, not just text.</p></div>
+        <div class="body lang-hi"><strong>Body tab me jao</strong><p>form data select karo, isse tum ek real file attach kar paoge, sirf text nahi.</p></div>
+      </div>
+      <div class="stepitem">
+        <div class="num">3</div>
+        <div class="body lang-en"><strong>Add the image field</strong><p>Key should be <code>image</code>, and change its type from Text to File.</p></div>
+        <div class="body lang-hi"><strong>image field add karo</strong><p>Key <code>image</code> honi chahiye, aur type Text se File me change kar do.</p></div>
+      </div>
+      <div class="stepitem">
+        <div class="num">4</div>
+        <div class="body lang-en"><strong>Send the request</strong><p>Pick any image file from your computer and hit Send.</p></div>
+        <div class="body lang-hi"><strong>Request bhejo</strong><p>Apne computer se koi bhi image file choose karo aur Send dabao.</p></div>
+      </div>
+    </div>
+
+    <p class="lang-en">If everything is set up correctly, the response will look like this.</p>
+    <p class="lang-hi">Agar sab sahi se set up hai, to response kuch aisa dikhega.</p>
+
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">response</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>{
+  <span class="c-yml">"message"</span>: <span class="c-str">"file uploaded successfully"</span>,
+  <span class="c-yml">"imageUrl"</span>: <span class="c-str">"https://ik.imagekit.io/yourid/uploads/sample.jpg"</span>
+}</pre>
+    </div>
+
+    <div class="note">
+      <span class="note-icon">&#128161;</span>
+      <p class="lang-en">Copy this <code>imageUrl</code> and paste it in a new browser tab, your image should open directly. This is the same URL you would later save inside a MongoDB document.</p>
+      <p class="lang-hi">Is <code>imageUrl</code> ko copy karke naye browser tab me paste karo, tumhari image seedha khul jaani chahiye. Yehi URL hai jo tum baad me MongoDB document ke andar save karoge.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 9 -->
+  <section class="section" id="tldr">
+    <div class="section-header">
+      <div class="section-num-big">09</div>
+      <div class="section-title-block">
+        <div class="section-title">TL;DR</div>
+        <div class="section-subtitle lang-en">Everything in one glance</div>
+        <div class="section-subtitle lang-hi">Yaad rakhne wali cheezein</div>
+      </div>
+    </div>
+
+    <ul class="plain lang-en">
+      <li>ImageKit stores your files and gives you back a public URL</li>
+      <li>We never store the actual file in MongoDB, only the URL string</li>
+      <li>Get your Public Key, Private Key and URL Endpoint from Developer Options</li>
+      <li>Private Key always stays in the env file, never in the frontend</li>
+      <li>CORS on the backend decides which frontend origin can send requests</li>
+      <li>Multer with memory storage gives us a file buffer</li>
+      <li>That buffer is uploaded to ImageKit, which returns the URL</li>
+      <li>Test the route in Postman before building any frontend</li>
+    </ul>
+
+    <ul class="plain lang-hi">
+      <li>ImageKit tumhari files store karta hai aur ek public URL wapas deta hai</li>
+      <li>Hum actual file kabhi MongoDB me store nahi karte, sirf URL string</li>
+      <li>Public Key, Private Key aur URL Endpoint Developer Options se milte hain</li>
+      <li>Private Key hamesha env file me rehti hai, frontend me kabhi nahi</li>
+      <li>CORS backend pe decide karta hai konsa frontend origin request bhej sakta hai</li>
+      <li>Multer memory storage se hume ek file buffer milta hai</li>
+      <li>Wahi buffer ImageKit pe upload hota hai, jo URL wapas deta hai</li>
+      <li>Koi bhi frontend banane se pehle route ko Postman me test karo</li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 10 -->
+  <section class="section" id="task">
+    <div class="section-header">
+      <div class="section-num-big">10</div>
+      <div class="section-title-block">
+        <div class="section-title">Your Task</div>
+        <div class="section-subtitle lang-en">Now it is your turn</div>
+        <div class="section-subtitle lang-hi">Ab tumhari baari hai</div>
+      </div>
+    </div>
+
+    <div class="concept">
+      <div class="concept-label">Assignment</div>
+      <p class="lang-en">It is now your task to build the frontend for this and connect it to the backend shown above. Create a simple form with a file input, send it to <code>/user/create</code> and show the returned image URL on the screen.</p>
+      <p class="lang-hi">Ab ye tumhara task hai ki iska frontend banao aur usko upar diye gaye backend se connect karo. Ek simple form banao jisme file input ho, use <code>/user/create</code> pe bhejo, aur jo image URL wapas mile use screen pe dikhao.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Sheryians Coding School &middot; ImageKit Documentation</span>
+    <span>Module: Backend &middot; Topic: File Upload with ImageKit</span>
+  </footer>
+
+</main>
+</div>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'copied!';
+    setTimeout(() => btn.textContent = 'copy', 2000);
+  });
+}
+
+const langBtns = document.querySelectorAll('.lang-btn');
+langBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    langBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.body.classList.toggle('lang-hi', btn.dataset.lang === 'hi');
+  });
+});
+
+const sections = document.querySelectorAll('.section');
+const navLinks  = document.querySelectorAll('nav a');
+const observer  = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`nav a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
