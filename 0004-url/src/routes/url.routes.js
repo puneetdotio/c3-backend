@@ -10,19 +10,19 @@ router.post("/", async (req, res) => {
 
     if (!url) {
         return res.status(400).json({
-            error: "Please enter valid url",
+            error: "Please enter a valid url",
         })
     }
 
-    if ((url.startsWith("http://") == false) && (url.startsWith("https://") == false)) {
+    if ((url.startsWith("http:/") == false) && (url.startsWith("https://") == false)) {
         return res.status(400).json({
-            error: "Please enter a valid url starting with http:// or https://",
+            error: "Please enter a vaild url starts with http:// or https://",
         })
     }
 
     if (url.length > 2048) {
-        return res.json({
-            error: "URL is too long",
+        return res.status(400).json({
+            error: "url is too long",
         })
     }
 
@@ -34,15 +34,15 @@ router.post("/", async (req, res) => {
     })
 
     return res.status(201).json({
-        message: "url shortned successfully",
+        message: "URL shortned successfully",
         data: {
             originalUrl: newUrl.originalUrl,
-            shortcode: newUrl.shortCode,
+            shortCode: newUrl.shortCode,
         }
     })
 })
 
-/* get :  */
+/* get : /api/url */
 router.get("/", async (req, res) => {
     const urls = await urlModel.find();
 
