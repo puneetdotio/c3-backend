@@ -1,6 +1,6 @@
 import { Router } from "express";
 import generateCode from "../utils/generateCode.js";
-import urlModel from "../models/url.model.js";
+import urlModel from "../models/user.model.js";
 
 const router = Router();
 
@@ -9,20 +9,20 @@ router.post("/", async (req, res) => {
     const { url } = req.body;
 
     if (!url) {
-        return res.status(400).json({
-            error: "Please enter a valid url",
+        return res.status(404).json({
+            error: "Please enter a URL"
         })
     }
 
-    if ((url.startsWith("http:/") == false) && (url.startsWith("https://") == false)) {
+    if ((url.startsWith("https://") === false) && (url.startsWith("http://") === false)) {
         return res.status(400).json({
-            error: "Please enter a vaild url starts with http:// or https://",
+            error: "Please enter a valid url starting with http:// or https://",
         })
     }
 
     if (url.length > 2048) {
         return res.status(400).json({
-            error: "url is too long",
+            error: "URl is too long",
         })
     }
 
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
     })
 
     return res.status(201).json({
-        message: "URL shortned successfully",
+        message: "URL shortened successfully",
         data: {
             originalUrl: newUrl.originalUrl,
             shortCode: newUrl.shortCode,

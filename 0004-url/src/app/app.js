@@ -1,6 +1,6 @@
 import express from "express"
 import urlRoutes from "../routes/url.routes.js"
-import urlModel from "../models/url.model.js";
+import urlModel from "../models/user.model.js";
 
 
 const app = express();
@@ -17,7 +17,7 @@ app.get("/:code", async (req, res) => {
     })
 
     if (!url) {
-        return res.status(404).json({
+        return res.status(400).json({
             error: "URL not found",
         })
     }
