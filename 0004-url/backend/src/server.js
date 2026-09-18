@@ -1,4 +1,4 @@
-import app from "./app/app.js"
+import app from "./app/app.js";
 import connectToDB from "./config/db.config.js";
 
 const port = 3000;

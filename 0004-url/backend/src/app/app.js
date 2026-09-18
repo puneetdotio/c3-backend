@@ -8,7 +8,7 @@ app.use(express.json())
 
 app.use("/api/url", urlRoutes)
 
-/* redirect to the original url */
+/* redirect to original url */
 app.get("/:code", async (req, res) => {
     const { code } = req.params;
 

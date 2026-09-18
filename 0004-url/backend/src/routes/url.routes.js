@@ -1,7 +1,6 @@
-import { Router } from "express";
+import { Router } from "express"
 import generateCode from "../utils/generateCode.js";
 import urlModel from "../models/url.model.js";
-
 
 const router = Router();
 
@@ -17,7 +16,7 @@ router.post("/", async (req, res) => {
 
     if ((url.startsWith("http://") == false) && (url.startsWith("https://") == false)) {
         return res.status(400).json({
-            error: "Please provide a valid URL starting with http:// or https://",
+            error: "Please provide a valid url starts with http:// or https://",
         })
     }
 
@@ -34,8 +33,8 @@ router.post("/", async (req, res) => {
         shortCode: code,
     })
 
-    return res.status(201).json({
-        message: "URL shortened successfully",
+    res.status(201).json({
+        message: "url shortened successfully",
         data: {
             originalUrl: newUrl.originalUrl,
             shortCode: newUrl.shortCode,
@@ -48,7 +47,7 @@ router.get("/", async (req, res) => {
     const urls = await urlModel.find();
 
     return res.status(200).json({
-        message: "URLs fetched successfully",
+        message: "urls fetched successfully",
         data: {
             urls
         }
@@ -63,14 +62,14 @@ router.delete("/:id", async (req, res) => {
 
     if (!url) {
         return res.status(400).json({
-            error: "URL not found",
+            error:"URL not found",
         })
     }
 
     await urlModel.findByIdAndDelete(id)
 
     return res.status(200).json({
-        message: "URL deleted successfully",
+        message:"URL deleted successfully",
     })
 })
 
